@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load staticfiles %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>CUSTOCK - 나만의 맞춤형 인공지능 주식 전문가</title>
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'stock/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&amp;display=swap&amp;subset=korean" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'> -->
+  <!-- Plugin CSS -->
+  <link href="{% static 'stock/vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static 'stock/css/creative.min.css' %}" rel="stylesheet">
+
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #myChart1 {
+            height: 100%;
+            width: 100%;
+            min-height: 150px;
+        }
+
+        #myChart2 {
+            height: 100%;
+            width: 100%;
+            min-height: 150px;
+        }
+
+        #myChart3 {
+            height: 100%;
+            width: 100%;
+            min-height: 150px;
+        }
+
+
+
+        .zc-ref {
+            display: none;
+        }
+
+        zing-grid[loading] {
+            height: 800px;
+        }
+
+        table {
+            height: 400px;
+
+        }
+        table.dataframe {
+          line-height: 0.5;
+          border-top: 1px solid #d6d6d6;
+          border-bottom: 1px solid #d6d6d6;
+          font-size: 12px;
+          width: 100%
+        }
+        table.dataframe thead th {
+          padding: 10px;
+          color: #fff;
+          background: #f4623a;
+        }
+        table.dataframe tbody th {
+          padding: 10px;
+          color: #212529;
+          border-top: 1px dashed #d6d6d6;
+        }
+        table.dataframe tbody td {
+          padding: 10px;
+          color: #212529;
+          border-top: 1px dashed #d6d6d6;
+        }
+        table.dataframe tbody :nth-child(even) td{
+          background: #ffefeb;
+        }
+        table.dataframe tbody :nth-child(even) th{
+          background: #ffefeb;
+        }
+        </style>
+</head>
+
+<body id="page-top">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-scrolled" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="./index1.html">CUSTOCK</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="./index2.html">종목조회</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="./index3.html">맞춤종목분석</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="./index5.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- About Section -->
+  <section class="page-section bg-primary">
+    <div class="text-center">
+      <div class="container">
+        <h2 class="text-white">CUSTOM ANALYSIS</h2>
+
+        <hr class="divider light my-4"><br><br><br>
+        <div class="row mb-5">
+          <div class="col-md-4 text-center mb-2">
+            <div class="mt-2 text-white">
+              <h1 class="font-weight-bold text-white">{{ t }}</h1>
+              <h6 class="font-weight-normal">투자유형</h6>
+            </div>
+          </div>
+          <div class="col-md-4 text-center mb-2">
+            <div class="mt-1 text-white">
+              <h1 class="font-weight-bold text-white">{{ know }}</h1>
+              <h6 class="font-weight-normal">투자지식</h6>
+            </div>
+          </div>
+          <div class="col-md-4 text-center mb-2">
+            <div class="mt-1 text-white">
+              <h1 class="font-weight-bold text-white">{{ wantrate }}%</h1>
+              <h6 class="font-weight-normal">주간목표수익률</h6>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-md-4 text-center mb-2">
+            <div class="mt-4 text-white">
+            </div>
+          </div>
+          <div class="col-md-4 text-center mb-2">
+            <div class="mt-1 text-white">
+              <h6 class="font-weight-bold">투자 비율</h6>
+              <h6 class="font-weight-normal">종목 1 : {{ ju1rate }}%</h6>
+              <h6 class="font-weight-normal">종목 2 : {{ ju2rate }}%</h6>
+              <h6 class="font-weight-normal">종목 3 : {{ ju3rate }}%</h6>
+            </div>
+          </div>
+          <div class="col-md-4 text-center mb-2">
+            <div class="mt-1 text-white">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-group" id="accordion">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="btn btn-light btn-xl" aria-expanded="true">추천종목 1</a>
+          </div>
+          <div class="col-md-4 text-center">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="btn btn-light btn-xl" aria-expanded="true">추천종목 2</a>
+          </div>
+          <div class="col-md-4 text-center">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="btn btn-light btn-xl" aria-expanded="true">추천종목 3</a>
+          </div>
+        </div>
+      </div>
+    </div><br>
+    <div id="collapse1" class="panel-collapse collapse show" style="">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+          </h4>
+        </div>
+        <div class="text-center">
+          <div class="container">
+            <div class="row pt-1">
+              <div class="col-md-6">
+                  <h5 align="center">{{ ch }} {{ nameh }} {{ ju1 }}주</h5>
+                <div class="card mb-5 box-shadow">
+                  <div class="card-header">
+                    <h5 class="my-0 font-weight-normal">Current Chart 1</h5>
+                  </div>
+                  <div class="card-body">
+    <div id='myChart1'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+    <script>
+        ZC.LICENSE = ["b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig1 = {
+            "type": "line",
+            "utc": true,
+            "plotarea": {
+                "margin": "dynamic 45 60 dynamic",
+            },
+            "legend": {
+                "layout": "float",
+                "background-color": "none",
+                "border-width": 0,
+                "shadow": 0,
+                "align": "center",
+                "adjust-layout": true,
+                "toggle-action": "remove",
+                "item": {
+                    "padding": 7,
+                    "marginRight": 17,
+                    "cursor": "hand"
+                }
+            },
+            "scale-x": {
+                "min-value": "",
+                "shadow": 0,
+                "step": "",
+                "transform": {
+                    "type": "",
+                    {#"all": "%D, %d %M<br />%h:%i %A",#}
+                    "guide": {
+                        "visible": false
+                    },
+                    "item": {
+                        "visible": false
+                    }
+                },
+                "label": {
+                    "visible": false
+                },
+                "minor-ticks": 0
+            },
+            "scale-y": {
+                "min-value": {{ min1h }},
+              	"max-value": {{ max1h }},
+                "line-color": "#f6f7f8",
+                "shadow": 0,
+                "guide": {
+                    "line-style": "dashed"
+                },
+                "label": {
+                    "text": "",
+                },
+                "minor-ticks": 0,
+                "thousands-separator": ","
+            },
+            "crosshair-x": {
+                "line-color": "#efefef",
+                "plot-label": {
+                    "border-radius": "5px",
+                    "border-width": "1px",
+                    "border-color": "#f6f7f8",
+                    "padding": "10px",
+                    "font-weight": "bold"
+                },
+                "scale-label": {
+                    "font-color": "#000",
+                    "background-color": "#f6f7f8",
+                    "border-radius": "5px"
+                }
+            },
+            "tooltip": {
+                "visible": false
+            },
+            "plot": {
+                "highlight": true,
+                "tooltip-text": "%t views: %v<br>%k",
+                "shadow": 0,
+                "line-width": "2px",
+                "marker": {
+                    "type": "circle",
+                    "size": 3
+                },
+                "highlight-state": {
+                    "line-width": 3
+                },
+                "animation": {
+                    "effect": 1,
+                    "sequence": 2,
+                    "speed": 10,
+                }
+            },
+            "series": [{
+                    "values": {{ listCh }},
+                    "text": "",
+                    "line-color": "#da534d",
+                    "legend-item":{
+                      "background-color": "#ffffff",
+                      "borderRadius":5,
+                      "font-color":"white"
+                    },
+                    "legend-marker": {
+                        "visible":false
+                    },
+                    "marker": {
+                        "background-color": "#da534d",
+                        "border-width": 1,
+                        "shadow": 0,
+                        "border-color": "#faa39f"
+                    },
+                    "highlight-marker":{
+                      "size":6,
+                      "background-color": "#da534d",
+                    }
+                }
+
+            ]
+        };
+
+        zingchart.render({
+            id: 'myChart1',
+            data: myConfig1,
+            height: '400px',
+            width: '100%'
+        });
+    </script>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6"><br>
+                <div class="card mb-5 box-shadow">
+                  <div class="card-header">
+                    <h5 class="my-0 font-weight-normal">Current Data 1</h5>
+                  </div>
+                  <div class="card-body">
+                      {{ contexth|safe }}
+                  </div>
+                </div>
+              </div>
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">1 Week</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">1 Month</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">3 Month</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div id="collapse2" class="panel-collapse collapse show" style="">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+          </h4>
+        </div>
+        <div class="text-center">
+          <div class="container">
+            <div class="row pt-1">
+              <div class="col-md-6">
+                  <h5 align="center">{{ cm }} {{ namem }} {{ ju2 }}주</h5>
+                <div class="card mb-5 box-shadow">
+                  <div class="card-header">
+                    <h5 class="my-0 font-weight-normal">Current Chart 2</h5>
+                  </div>
+                  <div class="card-body">
+    <div id='myChart2'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+    <script>
+        ZC.LICENSE = ["b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig2 = {
+            "type": "line",
+            "utc": true,
+            "plotarea": {
+                "margin": "dynamic 45 60 dynamic",
+            },
+            "legend": {
+                "layout": "float",
+                "background-color": "none",
+                "border-width": 0,
+                "shadow": 0,
+                "align": "center",
+                "adjust-layout": true,
+                "toggle-action": "remove",
+                "item": {
+                    "padding": 7,
+                    "marginRight": 17,
+                    "cursor": "hand"
+                }
+            },
+            "scale-x": {
+                "min-value": "",
+                "shadow": 0,
+                "step": "",
+                "transform": {
+                    "type": "",
+                    {#"all": "%D, %d %M<br />%h:%i %A",#}
+                    "guide": {
+                        "visible": false
+                    },
+                    "item": {
+                        "visible": false
+                    }
+                },
+                "label": {
+                    "visible": false
+                },
+                "minor-ticks": 0
+            },
+            "scale-y": {
+                "min-value": {{ min1m }},
+              	"max-value": {{ max1m }},
+                "line-color": "#f6f7f8",
+                "shadow": 0,
+                "guide": {
+                    "line-style": "dashed"
+                },
+                "label": {
+                    "text": "",
+                },
+                "minor-ticks": 0,
+                "thousands-separator": ","
+            },
+            "crosshair-x": {
+                "line-color": "#efefef",
+                "plot-label": {
+                    "border-radius": "5px",
+                    "border-width": "1px",
+                    "border-color": "#f6f7f8",
+                    "padding": "10px",
+                    "font-weight": "bold"
+                },
+                "scale-label": {
+                    "font-color": "#000",
+                    "background-color": "#f6f7f8",
+                    "border-radius": "5px"
+                }
+            },
+            "tooltip": {
+                "visible": false
+            },
+            "plot": {
+                "highlight": true,
+                "tooltip-text": "%t views: %v<br>%k",
+                "shadow": 0,
+                "line-width": "2px",
+                "marker": {
+                    "type": "circle",
+                    "size": 3
+                },
+                "highlight-state": {
+                    "line-width": 3
+                },
+                "animation": {
+                    "effect": 1,
+                    "sequence": 2,
+                    "speed": 10,
+                }
+            },
+            "series": [{
+                    "values": {{ listCm }},
+                    "text": "",
+                    "line-color": "#da534d",
+                    "legend-item":{
+                      "background-color": "#ffffff",
+                      "borderRadius":5,
+                      "font-color":"white"
+                    },
+                    "legend-marker": {
+                        "visible":false
+                    },
+                    "marker": {
+                        "background-color": "#da534d",
+                        "border-width": 1,
+                        "shadow": 0,
+                        "border-color": "#faa39f"
+                    },
+                    "highlight-marker":{
+                      "size":6,
+                      "background-color": "#da534d",
+                    }
+                }
+
+            ]
+        };
+
+        zingchart.render({
+            id: 'myChart2',
+            data: myConfig2,
+            height: '400px',
+            width: '100%'
+        });
+    </script>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6"> <br>
+                <div class="card mb-5 box-shadow">
+                  <div class="card-header">
+                    <h5 class="my-0 font-weight-normal">Current Data 2</h5>
+                  </div>
+                  <div class="card-body">
+                      {{ contextm|safe }}
+                  </div>
+                </div>
+              </div>
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">1 Week</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">1 Month</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">3 Month</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+          </div>
+        </div>
+      </div>
+        <br><br>
+        <div id="collapse3" class="panel-collapse collapse show" style="">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+          </h4>
+        </div>
+        <div class="text-center">
+          <div class="container">
+            <div class="row pt-1">
+              <div class="col-md-6">
+                  <h5 align="center">{{ cl }} {{ namel }} {{ ju3 }}주</h5>
+                <div class="card mb-5 box-shadow">
+                  <div class="card-header">
+                    <h5 class="my-0 font-weight-normal">Current Chart 3</h5>
+                  </div>
+                  <div class="card-body">
+    <div id='myChart3'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+    <script>
+        ZC.LICENSE = ["b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig3 = {
+            "type": "line",
+            "utc": true,
+            "plotarea": {
+                "margin": "dynamic 45 60 dynamic",
+            },
+            "legend": {
+                "layout": "float",
+                "background-color": "none",
+                "border-width": 0,
+                "shadow": 0,
+                "align": "center",
+                "adjust-layout": true,
+                "toggle-action": "remove",
+                "item": {
+                    "padding": 7,
+                    "marginRight": 17,
+                    "cursor": "hand"
+                }
+            },
+            "scale-x": {
+                "min-value": "",
+                "shadow": 0,
+                "step": "",
+                "transform": {
+                    "type": "",
+                    {#"all": "%D, %d %M<br />%h:%i %A",#}
+                    "guide": {
+                        "visible": false
+                    },
+                    "item": {
+                        "visible": false
+                    }
+                },
+                "label": {
+                    "visible": false
+                },
+                "minor-ticks": 0
+            },
+            "scale-y": {
+                "min-value": {{ min1l }},
+              	"max-value": {{ max1l }},
+                "line-color": "#f6f7f8",
+                "shadow": 0,
+                "guide": {
+                    "line-style": "dashed"
+                },
+                "label": {
+                    "text": "",
+                },
+                "minor-ticks": 0,
+                "thousands-separator": ","
+            },
+            "crosshair-x": {
+                "line-color": "#efefef",
+                "plot-label": {
+                    "border-radius": "5px",
+                    "border-width": "1px",
+                    "border-color": "#f6f7f8",
+                    "padding": "10px",
+                    "font-weight": "bold"
+                },
+                "scale-label": {
+                    "font-color": "#000",
+                    "background-color": "#f6f7f8",
+                    "border-radius": "5px"
+                }
+            },
+            "tooltip": {
+                "visible": false
+            },
+            "plot": {
+                "highlight": true,
+                "tooltip-text": "%t views: %v<br>%k",
+                "shadow": 0,
+                "line-width": "2px",
+                "marker": {
+                    "type": "circle",
+                    "size": 3
+                },
+                "highlight-state": {
+                    "line-width": 3
+                },
+                "animation": {
+                    "effect": 1,
+                    "sequence": 2,
+                    "speed": 10,
+                }
+            },
+            "series": [{
+                    "values": {{ listCl }},
+                    "text": "",
+                    "line-color": "#da534d",
+                    "legend-item":{
+                      "background-color": "#ffffff",
+                      "borderRadius":5,
+                      "font-color":"white"
+                    },
+                    "legend-marker": {
+                        "visible":false
+                    },
+                    "marker": {
+                        "background-color": "#da534d",
+                        "border-width": 1,
+                        "shadow": 0,
+                        "border-color": "#faa39f"
+                    },
+                    "highlight-marker":{
+                      "size":6,
+                      "background-color": "#da534d",
+                    }
+                }
+
+            ]
+        };
+
+        zingchart.render({
+            id: 'myChart3',
+            data: myConfig3,
+            height: '400px',
+            width: '100%'
+        });
+    </script>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6"><br>
+                <div class="card mb-5 box-shadow">
+                  <div class="card-header">
+                    <h5 class="my-0 font-weight-normal">Current Data 3</h5>
+                  </div>
+                  <div class="card-body">
+                      {{ contextl|safe }}
+                  </div>
+                </div>
+              </div>
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">1 Week</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">1 Month</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="col-md-4">#}
+{#                <div class="card mb-4 box-shadow">#}
+{#                  <div class="card-header">#}
+{#                    <h5 class="my-0 font-weight-normal">3 Month</h5>#}
+{#                  </div>#}
+{#                  <div class="card-body">#}
+{#                    <img class="card-img-top" src="./img/photo-1.jpg">#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+    <div class="text-center">
+      <a class="btn btn-light btn-xl js-scroll-trigger" href="./index3.html">맞춤분석 재설계</a>
+    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </section>
+  <!-- Footer -->
+  <footer class="bg-light py-1">
+    <div class="container">
+      <div class="small text-center text-muted">Copyright © 2019 - CUSTOCK</div>
+    </div>
+  </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js" style=""></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" style=""></script>
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js" style=""></script>
+  <script src="vendor/magnific-popup/jquery.magnific-popup.min.js" style=""></script>
+  <!-- Custom scripts for this template -->
+  <script src="js/creative.min.js" style=""></script>
+  </body>
+
+</html>
